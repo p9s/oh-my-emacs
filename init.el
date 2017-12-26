@@ -5,6 +5,24 @@
 ;; This is the first thing to get loaded.
 ;;
 
+;; Toggle frame to maximized
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(custom-set-variables
+  '(initial-frame-alist (quote ((fullscreen . maximized))))
+  )
+;; Global setup it use socket proxy
+(setq url-gateway-method 'socks)
+(setq socks-server '("Default server" "127.0.0.1" 1080 5))
+
+(setq url-gateway-local-host-regexp
+      (concat "\\`" (regexp-opt '("localhost" "127.0.0.1")) "\\'"))
+
 ;; Enter debugger if an error is signaled during Emacs startup.
 ;;
 ;; This works the same as you boot emacs with "--debug-init" every time, except
@@ -27,6 +45,7 @@
 
 ;; Now install el-get at the very first
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(add-to-list 'load-path "~/.emacs.d/el-get/helm-projectile")
 
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
