@@ -346,6 +346,19 @@ extension for GNU Emacs 24.
     '(setq flycheck-checkers (delq 'emacs-lisp-checkdoc flycheck-checkers)))
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
+(defun flymake-perl-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-with-folder-structure))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    (list (guess-plenv-perl-path) (list "-wc" local-file))))
+
+(push '(".+\\.p[ml]$" flymake-perl-init) flymake-allowed-file-name-masks)
+(push '(".+\\.psgi$" flymake-perl-init) flymake-allowed-file-name-masks)
+(push '(".+\\.t$" flymake-perl-init) flymake-allowed-file-name-masks)
+
+
 (ome-install 'flycheck)
 #+END_SRC
 

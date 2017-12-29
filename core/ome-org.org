@@ -109,6 +109,13 @@ display a list of the code blocks commands and their related keys.
 (setq org-use-speed-commands t)
 #+END_SRC
 
+* Org special setup
+  setup time track of when a certain TODO item was finished.
+#+NAME: special setup
+#+BEGIN_SRC emacs-lisp
+(setq org-log-done 'time)
+#+END_SRC
+
 * Code blocks
   :PROPERTIES:
   :CUSTOM_ID: babel
@@ -326,6 +333,34 @@ it globally.
 (setq org-export-with-smart-quotes t)
 #+END_SRC
 
+#+NAME: org-agenda
+#+BEGIN_SRC emacs-lisp
+(require 'org)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+(setq org-agenda-files ( list "~/org-notes/Finance.org"
+                              "~/org-notes/Joris.org"
+                              "~/org-notes/Todo.org"
+                              "~/org-notes/Salary.org"
+                              "~/org-notes/Project.org"))
+#+END_SRC
+
+#+BEGIN_SRC emac-lisp
+(setq org-agenda-custom-commands
+       '(("x" agenda)
+         ("y" agenda*)
+         ("w" todo "WAITING")
+         ("W" todo-tree "WAITING")
+         ("u" tags "+boss-urgent")
+         ("v" tags-todo "+boss-urgent")
+         ("U" tags-tree "+boss-urgent")
+         ("f" occur-tree "\\<FIXME\\>")
+         ("h" . "HOME+Name tags searches") ; description for "h" prefix
+         ("hl" tags "+home+Lisa")
+         ("hp" tags "+home+Peter")
+         ("hk" tags "+home+Kim")))
+#+END_SRC
 * Todo
 - How to handle =org-mode= format like ===?
 

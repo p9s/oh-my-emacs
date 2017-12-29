@@ -52,3 +52,6 @@ eshell
 
 # ido.last
 ido.last
+
+# tmp file
+*.sw*

@@ -33,6 +33,7 @@
 ;; know why.
 (setq debug-on-error t)
 
+
 (defvar ome-dir (file-name-directory (or load-file-name (buffer-file-name)))
   "oh-my-emacs home directory.")
 
@@ -99,3 +100,62 @@ FILENAME defaults to `buffer-file-name'."
 (org-babel-load-file (expand-file-name "ome.org" ome-dir))
 
 ;;; init.el ends here
+
+;; Setup my color schema themes
+(load-theme 'railscasts t nil)
+
+
+;; Setup for Starter Kit Perl
+
+(eval-after-load 'cperl-model
+  '(progn
+     (define-key cperl-mode-map (kbd "RET" ) 'reindent-then-newline-and-indent)
+     (define-key cperl-mode-map (kbd "C-M-h") 'backward-kill-word ) ))
+
+(global-set-key (kbd "C-h P") 'perldoc )
+
+(add-to-list 'auto-mode-alist '("\\.p[lm]$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.pod$" . pod-mode ) )
+(add-to-list 'auto-mode-alist '("\\.tt$" . tt-mode ))
+
+;; setup plenv
+(require 'plenv)
+
+
+;; Setup pomodoro
+(require 'pomodoro)
+;;(pomodoro-add-to-mode-line)
+(setq org-pomodoro-length 25)
+(setq org-pomodoro-short-break-length 3)
+(setq org-pomodoro-long-break-length 10)
+(setq org-pomodoro-play-sounds 1)
+
+(defun notify-osx (title message)
+  (call-process "terminal-notifier"
+                nil 0 nil
+                "-group" "Emacs"
+                "-title" title
+                "-sender" "org.gnu.Emacs"
+                "-message" message
+                "-activate" "org.gnu.Emacs"
+                ))
+
+(add-hook 'org-pomodoro-finished-hood
+          (lambda ()
+            (notify-osx "Pomodoro completed!" "Time for a break.")))
+(add-hook 'org-pomodoro-break-finished-hood
+          (lambda ()
+            (notify-osx "Pomodoro Sort Break Finished" "Ready for Another?")))
+(add-hook 'org-pomodoro-long-break-finished-hood
+          (lambda ()
+            (notify-osx "Pomodoro Long Break Finished" "Ready for Another?")))
+(add-hook 'org-pomodoro-killed-hook
+          (lambda()
+            (notify-osx "Pomodo Killed" "One does not simply kill a pomodoro!")))
+
+
+;; Mutiple windows switch
+(require 'window-numbering )
+(window-numbering-mode 1 )
+(setq window-numbering-assign-func
+      (lambda () (when (equal (buffer-name) "*Calculator*") 9)))

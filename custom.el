@@ -84,3 +84,28 @@ inversion of gas-comment-region"
   (if parent (put name 'cl-struct-include parent))
   (if print-auto (put name 'cl-struct-print print-auto))
   (if docstring (put name 'structure-documentation docstring)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("3b0a350918ee819dca209cec62d867678d7dac74f6195f5e3799aa206358a983" default)))
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(org-emphasis-alist
+   (quote
+    (("*" bold)
+     ("/" italic)
+     ("_" underline)
+     ("=" org-verbatim verbatim)
+     ("~" org-code verbatim)
+     ("+"
+      (:strike-through t)))))
+ '(package-selected-packages (quote (org plenv railscasts-theme rainbow-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
